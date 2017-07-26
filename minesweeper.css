@@ -1,0 +1,25 @@
+.container{
+	height: 900px;
+	width: 900px;
+	background-color: darkgreen;
+	margin: 20px auto;
+	border: 10px solid black;
+	border-radius: 10px;
+
+}
+
+.row{
+	box-sizing: border-box;
+	height: 100px;
+}
+
+.square{
+	border: 1 solid red;
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+}
+
+.selected{
+	background-color: red;
+}

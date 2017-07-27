@@ -20,12 +20,25 @@ $(document).ready(function() {
 			$(this).html(result);
 		}
 	});
+	$(".square").on('mousedown',function(event){
+		if (event.which == 3){
+			$(this).toggleClass("flagged");
+		}
+	});
 });
 
 var minesweeper = {
 	numOfMines: 9,
 	mineSquares: [],
+	numOfFlags: 9,
 	createBoard : function(){
+		var flagRow = $("<div class = 'flag-row'></div>");
+		console.log(this.numOfFlags);
+		for(var i = 0; i < this.numOfFlags; i++){
+			var flag = $("<div class = 'flag'></div>");
+			flagRow.append(flag);
+		}
+		$(document.body).prepend(flagRow);
 		for(var i = 0; i < 9; i++){
 			var row = $("<div class = 'row'></div>");
 				for(var j = 0; j < 9; j++){

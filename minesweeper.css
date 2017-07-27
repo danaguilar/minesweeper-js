@@ -1,11 +1,28 @@
+body{
+	background-color: gray;
+}
 .container{
 	height: 900px;
 	width: 900px;
 	background-color: darkgreen;
-	margin: 20px auto;
+	margin: 0 auto;
 	border: 10px solid black;
 	border-radius: 10px;
 
+}
+
+.flag-row{
+	width: 900px;
+	height: 20px;
+	margin: 10px auto;
+}
+
+.flag{
+	display: inline-block;
+	width: 20px;
+	margin-right: 10px;
+	background-color: red;
+	height: inherit;
 }
 
 .row{
@@ -34,4 +51,8 @@
 
 .empty{
 	background-color: darkgreen;
+}
+
+.flagged{
+	background-color: black;
 }

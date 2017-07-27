@@ -14,12 +14,24 @@
 }
 
 .square{
-	border: 1 solid red;
+	box-sizing: inherit;
 	width: 100px;
 	height: 100px;
+	line-height: 100px;
+	text-align: center;
+	font-weight: bold;
 	display: inline-block;
+	border-radius: 10px;
+	background-color:  mintcream;
+	border: 3px solid darkgreen;
+	vertical-align: top;
 }
+
 
 .selected{
 	background-color: red;
+}
+
+.empty{
+	background-color: darkgreen;
 }

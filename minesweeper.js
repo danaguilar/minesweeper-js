@@ -1,28 +1,48 @@
 $(document).ready(function() {
 	minesweeper.createBoard();
-	minesweeper.getSurroundSquares("4-4");
+	$(".square").click(function(){
+		var result = minesweeper.checkSquare.call(this);
+		console.log(result);
+		var squareID = $(this).attr("id");
+		if(result == 0){
+			$(this).addClass('empty');
+			var nearbySquares = minesweeper.getSurroundSquares(squareID);
+			$.each(nearbySquares,function( index, value){
+				if(!$("#"+value).hasClass('empty')){
+					$("#"+value).click();
+				}
+			});
+		}
+		else if(result == 9 ){
+			alert("boom");
+		}
+		else{
+			$(this).html(result);
+		}
+	});
 });
 
 var minesweeper = {
 	numOfMines: 9,
 	mineSquares: [],
 	createBoard : function(){
-		for(i = 0; i < 9; i++){
+		for(var i = 0; i < 9; i++){
 			var row = $("<div class = 'row'></div>");
-				for(j = 0; j < 9; j++){
+				for(var j = 0; j < 9; j++){
 					var square = $("<div class = 'square' id ='" + i +"-" + j +"'></div");
 					row.append(square);
 				}
 			$(".container").append(row);
 		}
-		for( i = 0; i < this.numOfMines; i++){
+		for(var i = 0; i < this.numOfMines; i++){
 			var randSquare = this.getRandomSquare();
 			while(randSquare.hasClass('selected')){
 				var randSquare = this.getRandomSquare();
 			}
+			randSquare.addClass('selected');
 			this.mineSquares.push(randSquare.attr('id'));
 		}
-		console.log(this.mineSquares);
+		$(".selected").removeClass("selected");
 	},
 
 	getRandomSquare : function(){
@@ -37,10 +57,8 @@ var minesweeper = {
 		var squareRow = squareID.split('-')[0];
 		var squareCol = squareID.split('-')[1];
 		var surroundingSquares = [];
-		console.log("Row: " + squareRow + " Col: " + squareCol);
-		for(i = squareRow-1 ; i <= (parseInt(squareRow)+1); i++){
-			console.log(i);
-			for(j = squareCol - 1; j <= parseInt(squareCol)+1; j++){
+		for(var i = squareRow-1 ; i <= (parseInt(squareRow)+1); i++){
+			for(var j = squareCol - 1; j <= parseInt(squareCol)+1; j++){
 				var IdValue = "#"+i+"-"+j
 				if(squareID == (i+"-"+j)){
 					continue;
@@ -51,6 +69,31 @@ var minesweeper = {
 				}
 			}
 		}
-		console.log(surroundingSquares);	
+		return surroundingSquares;	
+	},
+
+	isAMine : function(squareID){
+		for(var i=0; i<this.mineSquares.length; i++ ){
+			if(this.mineSquares[i] == squareID){
+				return true;
+			}
+		}
+		return false;
+	},
+
+	checkSquare : function(){
+		var squareID = $(this).attr("id");
+		if(minesweeper.isAMine(squareID)){
+			return 9;
+		}
+		var nearbyMines = 0;
+		var nearbySquares =  minesweeper.getSurroundSquares(squareID);
+		console.log(nearbySquares);
+		for(var i=0; i<nearbySquares.length; i++ ){
+			if(minesweeper.isAMine(nearbySquares[i])) {
+				nearbyMines++;
+			}
+		}
+		return nearbyMines;
 	}
 };
